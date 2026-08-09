@@ -64,17 +64,27 @@ class HTMLTableProcessor:
             row_id_name=row_id_name,
         )
 
-    def get_tabular_data_from_url(self, url: str, query_params: Dict[str, Union[str, int]] = None,
-                                  column_name_mapper: ColumnListMapperFunction = None,
-                                  known_percentages: Optional[List[str]] = None, row_id_func: RowIdFunction = None,
-                                      row_id_name: Optional[str] = None) -> pd.DataFrame:
-        response = requests.get(self.root_url + url, params=query_params)
-
+def get_tabular_data_from_url(
+        self,
+        url: str,
+        query_params: Dict[str, Union[str, int]] = None,
+        column_name_mapper: ColumnListMapperFunction = None,
+        known_percentages: Optional[List[str]] = None,
+        row_id_func: RowIdFunction = None,
+        row_id_name: Optional[str] = None,
+    ) -> pd.DataFrame:
+        headers = {
+            "User-Agent": "okhttp/4.12.0",
+            "Accept": "text/html,application/xhtml+xml,xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+        }
+        response = requests.get(
+            self.root_url + url, params=query_params, headers=headers
+        )
         if response.status_code > 399:
             raise requests.exceptions.HTTPError(
                 f"Error accessing '{self.root_url + url}'. Received status code {response.status_code}"
             )
-
         return self.get_tabular_data_from_html(
             response.content,
             column_name_mapper=column_name_mapper,
