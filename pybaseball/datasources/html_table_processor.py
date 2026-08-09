@@ -92,7 +92,7 @@ def get_tabular_data_from_url(
             row_id_func=row_id_func,
             row_id_name=row_id_name,
         )
-
+        
     def get_tabular_data_from_options(self, base_url: str, query_params: Dict[str, Union[str, int]],
                                       column_name_mapper: ColumnListMapperFunction = None,
                                       known_percentages: Optional[List[str]] = None, row_id_func: RowIdFunction = None,
