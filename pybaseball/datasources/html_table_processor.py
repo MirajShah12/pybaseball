@@ -64,7 +64,7 @@ class HTMLTableProcessor:
             row_id_name=row_id_name,
         )
 
-def get_tabular_data_from_url(
+    def get_tabular_data_from_url(
         self,
         url: str,
         query_params: Dict[str, Union[str, int]] = None,
